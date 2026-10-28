@@ -10,7 +10,7 @@ export function ContactTable({ contacts, selected, onToggle, onToggleAll }: Prop
       <thead>
         <tr>
           <th><input type="checkbox" checked={all} onChange={onToggleAll} aria-label="Select all on page" /></th>
-          <th>Name</th><th>Email</th><th>Phone</th><th>Company</th><th>Tags</th>
+          <th>Name</th><th>Email</th><th>Phone</th><th>Company</th><th>Tags</th><th>Created</th>
         </tr>
       </thead>
       <tbody>
@@ -22,6 +22,7 @@ export function ContactTable({ contacts, selected, onToggle, onToggleAll }: Prop
             <td>{c.phone ?? '—'}</td>
             <td>{c.company ?? '—'}</td>
             <td>{c.tags.map((t) => <span key={t.id} className="chip">{t.name}</span>)}</td>
+            <td>{new Date(c.createdAt).toLocaleDateString()}</td>
           </tr>
         ))}
       </tbody>

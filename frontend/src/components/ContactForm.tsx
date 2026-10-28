@@ -86,7 +86,7 @@ export function ContactForm({ contact }: { contact: Contact }) {
       {saved && <div className="box ok">Saved (v{base.version}).</div>}
       <div className="row">
         <button disabled={update.isPending || conflict !== null}>{update.isPending ? 'Saving…' : 'Save'}</button>
-        <span className="muted">Version {base.version}</span>
+        <span className="muted">Version {base.version} · Created {new Date(base.createdAt).toLocaleString()} · Updated {new Date(base.updatedAt).toLocaleString()}</span>
       </div>
     </form>
   );
