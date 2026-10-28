@@ -1,5 +1,6 @@
 import express from 'express';
 import { contactsRouter } from './contacts/routes.js';
+import { tagsRouter } from './tags/routes.js';
 import { errorHandler, notFoundHandler } from './errors.js';
 
 export function createApp() {
@@ -8,6 +9,7 @@ export function createApp() {
   app.get('/api/health', (_req, res) => {
     res.json({ ok: true });
   });
+  app.use('/api', tagsRouter);
   app.use('/api/contacts', contactsRouter);
   app.use(notFoundHandler);
   app.use(errorHandler);
