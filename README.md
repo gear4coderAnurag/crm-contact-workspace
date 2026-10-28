@@ -17,12 +17,7 @@ npm run dev          # API on :4000, UI on http://localhost:5173
 npm test             # runs against crm_test
 ```
 
-If port 5432 is already taken on your machine, pick another host port and point the app at it:
-
-```bash
-PG_PORT=5433 npm run db:up
-export DATABASE_URL=postgres://crm:crm@localhost:5433/crm   # used by migrate / seed / dev / test
-```
+If port 5432 is already taken on your machine, copy `.env.example` to `.env` (repo root). It sets `PG_PORT=5433` for compose and `DATABASE_URL` for the app, and both `npm run db:up` and the Node scripts pick it up automatically. Real environment variables take precedence over `.env`.
 
 ### B. Local Postgres (no Docker)
 

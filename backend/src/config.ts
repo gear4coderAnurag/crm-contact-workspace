@@ -1,3 +1,12 @@
+import { fileURLToPath } from 'node:url';
+
+// Optional repo-root .env (real env vars win); lets one file set PG_PORT for compose and DATABASE_URL for the app.
+try {
+  process.loadEnvFile(fileURLToPath(new URL('../../.env', import.meta.url)));
+} catch {
+  /* no .env file */
+}
+
 const isTest = process.env.NODE_ENV === 'test';
 const base = process.env.DATABASE_URL ?? 'postgres://crm:crm@localhost:5432/crm';
 
