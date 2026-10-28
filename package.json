@@ -1,0 +1,16 @@
+{
+  "name": "crm-contacts",
+  "private": true,
+  "workspaces": ["backend", "frontend"],
+  "scripts": {
+    "db:up": "docker compose up -d --wait",
+    "migrate": "npm run migrate -w backend",
+    "seed": "npm run seed -w backend",
+    "dev": "concurrently -n api,web -c blue,green \"npm run dev -w backend\" \"npm run dev -w frontend\"",
+    "test": "npm test -w backend",
+    "build": "npm run build -w backend && npm run build -w frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}
