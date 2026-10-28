@@ -12,7 +12,7 @@ Requires Node 20+ and either Docker or a local Postgres 16+.
 npm install
 npm run db:up        # docker compose up -d --wait  (Postgres 16, DBs: crm + crm_test)
 npm run migrate
-npm run seed         # ~200k contacts (about a minute, mostly GIN index maintenance)
+npm run seed         # ~200k contacts (10–60 s depending on the machine; mostly GIN index maintenance)
 npm run dev          # API on :4000, UI on http://localhost:5173
 npm test             # runs against crm_test
 ```
@@ -79,7 +79,7 @@ Measured on the 200k seed (`EXPLAIN ANALYZE`): search + tag filter + keyset page
 ## Known issues / incomplete
 
 - No browser-level (e2e) tests; UI states were built to the §6 table and type-checked, backend behaviour is covered by tests.
-- Seed takes about a minute rather than "a few seconds" because of GIN index maintenance on 200k inserts.
+- Seed takes 10–60 s rather than "a few seconds" because of GIN index maintenance on 200k inserts.
 - `/companies` seq-scans; fine at 200k, needs a `companies` table or cache at scale.
 - "Prev" after a hard reload on a deep page goes back to the first page (the cursor stack is in memory; the current cursor is in the URL).
 - No auth, no contact create/delete (not in the spec).
