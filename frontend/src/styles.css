@@ -1,0 +1,32 @@
+* { box-sizing: border-box; }
+body { margin: 0; font: 14px/1.4 system-ui, sans-serif; color: #1a1a1a; background: #fafafa; }
+a { color: #1d4ed8; }
+.topbar { background: #1e293b; padding: 12px 24px; }
+.topbar a { color: #fff; text-decoration: none; font-weight: 600; }
+main { max-width: 1000px; margin: 0 auto; padding: 16px 24px; }
+input, select, button { font: inherit; padding: 6px 8px; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; opacity: 0.5; }
+.toolbar { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start; margin-bottom: 12px; }
+.toolbar label, .field label { display: flex; flex-direction: column; gap: 2px; font-size: 12px; color: #555; }
+.hint { color: #b45309; font-size: 12px; margin: 2px 0 0; }
+.muted { color: #666; }
+table { width: 100%; border-collapse: collapse; background: #fff; }
+th, td { text-align: left; padding: 8px; border-bottom: 1px solid #e5e5e5; }
+.chip { display: inline-flex; align-items: center; gap: 4px; background: #e0e7ff; border-radius: 10px; padding: 1px 8px; margin: 0 4px 2px 0; font-size: 12px; }
+.chip button { border: 0; background: none; padding: 0 2px; }
+.pager { display: flex; gap: 8px; margin-top: 12px; align-items: center; }
+.bulk { display: flex; gap: 8px; align-items: center; background: #fef9c3; padding: 8px; margin-bottom: 8px; }
+.box { padding: 10px 12px; border-radius: 4px; margin: 8px 0; }
+.error { background: #fee2e2; border: 1px solid #fca5a5; }
+.warn { background: #fef3c7; border: 1px solid #fcd34d; }
+.ok { background: #dcfce7; border: 1px solid #86efac; }
+.empty { text-align: center; padding: 32px; background: #fff; }
+.form { display: grid; gap: 12px; max-width: 480px; background: #fff; padding: 16px; }
+.field { display: flex; flex-direction: column; }
+.field .err { color: #b91c1c; font-size: 12px; margin-top: 2px; }
+.field input[aria-invalid="true"] { border-color: #b91c1c; }
+.row { display: flex; gap: 8px; align-items: center; }
+.activity { list-style: none; padding: 0; }
+.activity li { padding: 6px 0; border-bottom: 1px solid #eee; }
+section { margin-top: 24px; }

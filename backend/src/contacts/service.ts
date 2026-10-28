@@ -32,7 +32,8 @@ export async function list(query: z.infer<typeof listQuery>) {
   const last = page[page.length - 1];
   const nextCursor = hasMore && last ? encodeCursor({ s: sort, o: order, v: last.sortValue, id: last.id }) : null;
   const tags = await repo.tagsByContact(db, page.map((r) => r.id));
-  return { data: withTags(page, tags), nextCursor };
+  // sortValue is cursor plumbing, not part of the Contact shape
+  return { data: withTags(page.map(({ sortValue: _s, ...c }) => c), tags), nextCursor };
 }
 
 export async function get(id: number, exec: repo.Executor = db): Promise<Contact> {

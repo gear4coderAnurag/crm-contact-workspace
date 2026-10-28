@@ -112,3 +112,13 @@ describe('GET /api/contacts validation', () => {
     expect(res.status).toBe(400);
   });
 });
+
+describe('GET /api/contacts response shape', () => {
+  it('returns Contact objects without internal fields', async () => {
+    await makeContact({ firstName: 'Shape' });
+    const [c] = (await api().get('/api/contacts')).body.data;
+    expect(Object.keys(c).sort()).toEqual(
+      ['company', 'createdAt', 'email', 'firstName', 'id', 'lastName', 'phone', 'tags', 'updatedAt', 'version'],
+    );
+  });
+});
