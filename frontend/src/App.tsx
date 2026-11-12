@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import { ApiError } from './api/client';
+import { ToastProvider } from './components/Toast';
 import { ContactDetailPage } from './pages/ContactDetailPage';
 import { ContactListPage } from './pages/ContactListPage';
 
@@ -17,6 +18,7 @@ const queryClient = new QueryClient({
 export function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <ToastProvider>
       <BrowserRouter>
         <header className="topbar">
           <Link to="/">CRM Contacts</Link>
@@ -29,6 +31,7 @@ export function App() {
           </Routes>
         </main>
       </BrowserRouter>
+      </ToastProvider>
     </QueryClientProvider>
   );
 }

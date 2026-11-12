@@ -14,7 +14,11 @@ export function ContactDetailPage() {
     <div>
       <button onClick={() => (window.history.state?.idx > 0 ? navigate(-1) : navigate('/'))}>← Back to list</button>
       <h1>Contact #{id}</h1>
-      {isPending && <p>Loading…</p>}
+      {isPending && (
+        <div className="form" aria-busy="true" aria-label="Loading contact">
+          {Array.from({ length: 5 }, (_, i) => <span key={i} className="skel skel-field" />)}
+        </div>
+      )}
       {error && <ErrorBox error={error} onRetry={() => void refetch()} />}
       {data && (
         <>

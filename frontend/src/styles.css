@@ -57,3 +57,79 @@ section { margin-top: 28px; background: var(--card); padding: 16px 20px; border-
 .activity { list-style: none; padding: 0; margin: 0; }
 .activity li { padding: 8px 0; border-bottom: 1px solid var(--line); }
 .activity li:last-child { border: 0; }
+
+/* table: scrolls sideways on narrow screens instead of squashing; whole row opens the contact */
+.table-wrap { overflow-x: auto; border-radius: var(--r); box-shadow: var(--shadow); }
+.table-wrap table { box-shadow: none; min-width: 760px; }
+.nowrap { white-space: nowrap; }
+tr.clickable { cursor: pointer; }
+tr.selected, tr.selected:hover { background: var(--brand-l); }
+
+/* bulk bar stays in view while scrolling a long page */
+.bulk-wrap { position: sticky; top: 0; z-index: 5; }
+.bulk { flex-wrap: wrap; box-shadow: var(--shadow); }
+
+/* loading placeholders */
+.skel { display: block; height: 12px; border-radius: 6px; background: linear-gradient(90deg, var(--line) 25%, #f3f4f8 50%, var(--line) 75%); background-size: 200% 100%; animation: skel 1.2s ease-in-out infinite; }
+.skel-field { height: 36px; }
+@keyframes skel { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) { .skel { animation: none; } }
+
+/* conflict: fields the other user changed */
+.field.changed input { border-color: #f59e0b; background: var(--warn-bg); }
+.field .theirs { font-size: 12px; margin-top: 4px; color: #92400e; }
+
+/* toasts */
+.toasts { position: fixed; right: 16px; bottom: 16px; display: grid; gap: 8px; z-index: 20; max-width: calc(100vw - 32px); }
+.toast { background: var(--text); color: #fff; padding: 10px 14px; border-radius: 8px; box-shadow: var(--shadow); font-weight: 500; }
+
+/* tablet */
+@media (max-width: 900px) {
+  main { padding: 16px 16px 48px; }
+  .topbar { padding: 12px 16px; }
+  .form, section { max-width: none; }
+}
+
+/* phone: stacked toolbar, contacts as cards, full-width controls */
+@media (max-width: 640px) {
+  body { font-size: 15px; }
+  h1 { font-size: 20px; margin: 4px 0 12px; }
+  input, select, button { min-height: 40px; font-size: 16px; } /* 16px stops iOS zooming into inputs */
+  input[type=checkbox] { min-height: 0; width: 20px; height: 20px; }
+
+  .toolbar { padding: 12px; gap: 10px; }
+  .toolbar > * { flex: 1 1 100%; }
+  .toolbar input, .toolbar select { width: 100%; }
+
+  .bulk { padding: 10px; }
+  .bulk strong { flex: 1 1 100%; }
+  .bulk input { flex: 1 1 100%; }
+  .bulk button { flex: 1 1 0; }
+
+  .table-wrap { overflow: visible; box-shadow: none; }
+  .table-wrap table, .table-wrap tbody { display: block; min-width: 0; background: none; box-shadow: none; }
+  .table-wrap thead { display: none; }
+  .table-wrap tr { display: grid; grid-template-columns: auto 1fr; column-gap: 12px; row-gap: 4px; align-items: center;
+    background: var(--card); border-radius: var(--r); box-shadow: var(--shadow); padding: 12px 14px; margin-bottom: 10px; }
+  .table-wrap tr.selected { outline: 2px solid var(--brand); }
+  .table-wrap td { display: block; padding: 0; border: 0; min-width: 0; overflow-wrap: anywhere; }
+  .table-wrap td.cell-check { grid-row: 1; grid-column: 1; }
+  .table-wrap td.cell-name { grid-row: 1; grid-column: 2; font-size: 16px; }
+  .table-wrap td[data-label] { grid-column: 1 / -1; display: flex; gap: 8px; font-size: 14px; }
+  .table-wrap td[data-label]::before { content: attr(data-label); flex: 0 0 72px; color: var(--muted); font-size: 12px; font-weight: 600; padding-top: 2px; }
+  .table-wrap td[data-label] .chip { margin-bottom: 4px; }
+  .table-wrap td .skel { width: 100%; }
+
+  .pager { justify-content: space-between; }
+  .pager button { flex: 1; }
+
+  .form { padding: 16px; gap: 12px; }
+  .form > .row button { flex: 1 1 100%; }
+  section { padding: 14px 16px; margin-top: 16px; }
+  .row { flex-wrap: wrap; }
+  .row input { max-width: none; flex: 1 1 160px; }
+  .activity li { font-size: 14px; }
+
+  .empty { padding: 32px 16px; }
+  .toasts { left: 16px; right: 16px; bottom: 16px; max-width: none; }
+}

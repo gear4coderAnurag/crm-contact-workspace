@@ -4,7 +4,7 @@ import { useContacts } from '../api/hooks';
 import type { ListParams } from '../api/types';
 import { BulkTagBar } from '../components/BulkTagBar';
 import { CompanyFilter } from '../components/CompanyFilter';
-import { ContactTable } from '../components/ContactTable';
+import { ContactTable, ContactTableSkeleton } from '../components/ContactTable';
 import { ErrorBox } from '../components/ErrorBox';
 import { Pager } from '../components/Pager';
 import { SearchInput } from '../components/SearchInput';
@@ -87,7 +87,7 @@ export function ContactListPage() {
 
       <BulkTagBar selectedIds={[...selected]} onDone={() => setSelected(new Set())} />
 
-      {isPending && <p>Loading…</p>}
+      {isPending && <ContactTableSkeleton />}
       {error && <ErrorBox error={error} onRetry={() => void refetch()} />}
       {data && data.data.length === 0 && (
         <div className="empty">

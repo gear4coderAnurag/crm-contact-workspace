@@ -58,7 +58,10 @@ React 18 + TS + Vite, TanStack Query v5, React Router v6, plain CSS · Node 20 +
 
 ## Tests
 
-`npm test` — 29 tests against the real `crm_test` DB (truncated between tests): stale update + concurrent writers, email uniqueness (case-insensitive, multiple NULLs), bulk-tag idempotency, keyset completeness over both sorts/orders with identical timestamps and sub-millisecond differences, search/filters, validation, activity diffs, cursor encoding.
+`npm test` runs both suites:
+
+- **Backend:** 29 tests against the real `crm_test` DB, which is truncated between tests. They cover stale updates and concurrent writers, email uniqueness (case-insensitive, multiple NULLs), bulk-tag idempotency, and keyset paging completeness over both sorts and orders, including identical timestamps and sub-millisecond differences. They also cover search and filters, validation, activity diffs and cursor encoding.
+- **Frontend** (`npm run test:web`): 9 component tests (Vitest + Testing Library + jsdom) with `fetch` stubbed. They cover the conflict flow (banner, highlighted fields, both-changed marker, Save disabled, Reload latest), 400 field errors next to the right input, the 5xx banner, the save toast, the search debounce and its 2-character minimum, and bulk tag success and error.
 
 Measured on the 200k seed (`EXPLAIN ANALYZE`): search + tag filter + keyset page ≈ 15 ms (BitmapOr over name/email trigram indexes); plain keyset page ≈ 0.07 ms (index-only scan); 3-way search ordered by `created_at` ≈ 0.16 ms.
 
@@ -73,7 +76,7 @@ Measured on the 200k seed (`EXPLAIN ANALYZE`): search + tag filter + keyset page
 
 ## Known issues / incomplete
 
-- No browser-level (e2e) tests; UI states were built to the §6 table and type-checked, backend behaviour is covered by tests.
+- No browser-level (e2e) tests. Frontend components are tested in jsdom with a stubbed API; full browser flows are checked by hand.
 - Seed takes 10–60 s rather than "a few seconds" because of GIN index maintenance on 200k inserts.
 - `/companies` seq-scans; fine at 200k, needs a `companies` table or cache at scale.
 - "Prev" after a hard reload on a deep page goes back to the first page (the cursor stack is in memory; the current cursor is in the URL).
