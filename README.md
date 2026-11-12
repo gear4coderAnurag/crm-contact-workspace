@@ -94,7 +94,25 @@ Measured on the 200k seed (`EXPLAIN ANALYZE`): search + tag filter + keyset page
 
 ## AI Usage
 
-- TODO: tools used
-- TODO: what was generated vs. written by hand
-- TODO: how the output was verified
-- TODO: what was changed or rejected
+## AI Usage
+
+**Tools:** Claude Code (Anthropic, Claude Opus model), used in VS Code.
+
+**What I used it for**
+- Turning my design spec (ARCHITECTURE.md: data model, API contract, keyset pagination, optimistic locking) into the backend and frontend implementation, step by step.
+- Writing and extending tests: backend integration tests against real Postgres, and frontend component tests.
+- Debugging local setup (Postgres port clash with a local install → moved Docker to port 5433 via `.env`).
+- UI polish after the features worked: success messages, conflict field highlighting, loading placeholders, mobile layout.
+- Reviewing the work against the assignment brief to find gaps, and drafting the README.
+
+**How I verified the output**
+- Read and understood every change before keeping it; I can explain each module.
+- 29 backend tests (including concurrent writers and keyset completeness) + 9 frontend tests, all passing.
+- Checked query plans with `EXPLAIN ANALYZE` on the 200k seed.
+- Walked through every user flow by hand in the browser, including two-tab conflicts.
+
+**Suggestions I changed or rejected**
+- **Contact create/delete:** the AI first listed them as missing. I checked the brief: they aren't required, and they would add surface area (new activity types, delete semantics) without being asked for. Left out on purpose.
+- **Total count / page numbers:** rejected offset pagination with `COUNT(*)`. It slows down linearly at millions of rows. Used keyset cursors with Prev/Next instead.
+- **Heavier abstractions:** when reviewing SOLID, I chose not to add a DI container, service classes or abstract repositories. At this size they add code without benefit; integration tests against real Postgres cover the risky SQL better than mocks.
+
